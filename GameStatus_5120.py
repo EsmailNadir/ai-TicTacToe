@@ -21,6 +21,8 @@ class GameStatus:
 			for col in range(cols):
 				if self.board_state[row][col] == 0:
 					count += 1
+		if count >= 1:
+			return False
 		# if we have no empty spaces we check who won now with updated score
 		self.oldScores = self.get_scores(terminal=True)
 		if count == 0:
