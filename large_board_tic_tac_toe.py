@@ -73,15 +73,25 @@ class RandomBoardTicTacToe:
 
 
     def draw_circle(self, x, y):
-        """
-        YOUR CODE HERE TO DRAW THE CIRCLE FOR THE NOUGHTS PLAYER
-        """
+        # this creates a circle with outline
+        radius = 50
+        pygame.draw.circle(self.screen,self.CIRCLE_COLOR,(x,y),radius,5)
+        pygame.draw.circle(self.screen,"blue",(x,y),radius-10,5)
         
 
     def draw_cross(self, x, y):
-        """
-        YOUR CODE HERE TO DRAW THE CROSS FOR THE CROSS PLAYER AT THE CELL THAT IS SELECTED VIA THE gui
-        """
+        # left side
+        pygame.draw.rect(self.screen, "red", (x-20, y+20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x-10, y+10,15,10))
+        pygame.draw.rect(self.screen, "red", (x-20, y-20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x-10, y-10,15,10))
+        # mid
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x, y,15,15))
+        #right side
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x+10, y-10,15,10))
+        pygame.draw.rect(self.screen, "red", (x+20, y-20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x+10, y+10,15,10))
+        pygame.draw.rect(self.screen, "red", (x+20, y+20,15,10))
         
 
     def is_game_over(self):
