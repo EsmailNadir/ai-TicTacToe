@@ -128,15 +128,12 @@ class RandomBoardTicTacToe:
         pygame.display.update()
 
     def game_reset(self):
-        """
-        Resets the board to value 0 for all cells and creates a new game state.
-        """
         self.draw_game()
-
-        """
-        YOUR CODE HERE TO RESET THE BOARD TO VALUE 0 FOR ALL CELLS AND CREATE A NEW GAME STATE.
-        """
-
+    
+        if self.is_game_over():
+             board_size = self.GRID_SIZE
+             self.game_state = GameStatus(board_state=[[0] * board_size for _ in range(board_size)], turn_O=False)
+             self.game_over = False
         pygame.display.update()
 
     def play_game(self, mode="player_vs_ai"):
