@@ -55,6 +55,8 @@ class RandomBoardTicTacToe:
 
         # Initialize pygame
         pygame.init()
+
+        self.board = [[""] * self.GRID_SIZE for _ in range(self.GRID_SIZE)]
         self.game_reset()
 
     def draw_game(self):
@@ -130,7 +132,7 @@ class RandomBoardTicTacToe:
         if self.is_game_over():
             terminal = self.game_state.is_terminal()
             final_score = self.game_state.get_scores(terminal)
-            print(f"Game Over! Final Score: {final_score}")
+            print(f"Game Over!! Final Score: {final_score}")
 
         pygame.display.update()
 
@@ -149,11 +151,11 @@ class RandomBoardTicTacToe:
         clock = pygame.time.Clock()
         while not done:
             for event in pygame.event.get():
-                # Check for quit event
+                # Identify quit event 
                 if event.type == pygame.QUIT:
                     done = True
 
-                # Check for mouse click events
+                # Check for the mouse clicks 
                 if event.type == pygame.MOUSEBUTTONUP:
                     x, y = pygame.mouse.get_pos()
                     col = int(x // (self.WIDTH + self.MARGIN))
@@ -165,7 +167,7 @@ class RandomBoardTicTacToe:
                             self.board[row][col] = "X"
                             self.draw_cross(col, row)
 
-                            # Check if the game is over after move
+                            # Check if the game is over after moves
                             if self.is_game_over():
                                 terminal = self.game_state.is_terminal()
                                 final_score = self.game_state.get_scores(terminal)
@@ -174,7 +176,7 @@ class RandomBoardTicTacToe:
                                 pygame.time.delay(3000)
                                 return  
 
-                            # Switch to AI's turn
+                            # Switch to AI's turn etc
                             self.change_turn()
                             self.play_ai()
 
