@@ -55,7 +55,7 @@ class RandomBoardTicTacToe:
         # Initialize pygame
         pygame.init()
 
-        # ✅ Fix: Initialize the board here
+    
         self.board = [[""] * self.GRID_SIZE for _ in range(self.GRID_SIZE)]
 
         self.game_reset()
@@ -141,7 +141,7 @@ class RandomBoardTicTacToe:
 
     def play_game(self, mode="player_vs_ai"):
         
-        self.board = [[""] * self.GRID_SIZE for _ in range(self.GRID_SIZE)]  # Ensure board is initialized
+        self.board = [[""] * self.GRID_SIZE for _ in range(self.GRID_SIZE)]  
         
         done = False  
         clock = pygame.time.Clock()  
