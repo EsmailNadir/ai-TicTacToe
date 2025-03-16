@@ -189,9 +189,18 @@ class RandomBoardTicTacToe:
 # Initialize and start the game
 tictactoegame = RandomBoardTicTacToe()
 
-"""
-YOUR CODE HERE TO SELECT THE OPTIONS VIA THE GUI CALLED FROM THE ABOVE LINE.
-AFTER THE ABOVE LINE, THE USER SHOULD SELECT THE OPTIONS AND START THE GAME.
-YOUR FUNCTION play_game() SHOULD THEN BE CALLED WITH THE RIGHT OPTIONS AS SOON
-AS THE USER STARTS THE GAME.
-"""
+def select_game_mode():
+    global mode
+    # Ask the user to select the mode
+    print("Select game mode:")
+    print("1. Player vs AI")
+    print("2. Player vs Player")
+    choice = input("Enter choice (1/2): ")
+    if choice == "1":
+        mode = "player_vs_ai"
+    elif choice == "2":
+        mode = "player_vs_player"
+
+# Start the game by selecting the mode
+select_game_mode()
+tictactoegame.play_game(mode)

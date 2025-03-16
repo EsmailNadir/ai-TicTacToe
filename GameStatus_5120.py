@@ -60,12 +60,17 @@ class GameStatus:
         return scores * check_point  
 
     def get_moves(self):
-        """
-        YOUR CODE HERE TO ADD ALL THE NON-EMPTY CELLS TO MOVES VARIABLES 
-        AND RETURN IT TO BE USED BY YOUR MINIMAX OR NEGAMAX FUNCTIONS.
-        """
-        moves = []
-        return moves  
+            moves = []
+
+            # go over the board to find non-empty cells
+            for row in range(3):
+                for col in range(3):
+                    # check if the cell is empty
+                    if self.board[row][col] == ' ':
+                        # if empty, add to list of possible moves
+                        moves.append((row, col))
+
+		return moves
 
     def get_new_state(self, move):
         new_board_state = [row[:] for row in self.board_state]  
