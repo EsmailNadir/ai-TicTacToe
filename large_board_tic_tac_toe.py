@@ -95,13 +95,12 @@ class RandomBoardTicTacToe:
         
 
     def is_game_over(self):
-
-        """
-        YOUR CODE HERE TO SEE IF THE GAME HAS TERMINATED AFTER MAKING A MOVE. YOU SHOULD USE THE IS_TERMINAL()
-        FUNCTION FROM GAMESTATUS_5120.PY FILE (YOU WILL FIRST NEED TO COMPLETE IS_TERMINAL() FUNCTION)
+        # call this function after each move to check if the game is over
+        if self.game_state.is_terminal() == False:
+            return False
+        else:
+            return True
         
-        YOUR RETURN VALUE SHOULD BE TRUE OR FALSE TO BE USED IN OTHER PARTS OF THE GAME
-        """
     
 
     def move(self, move):
