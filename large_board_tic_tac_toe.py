@@ -1,5 +1,5 @@
 """
-PLEASE READ THE COMMENTS BELOW AND THE HOMEWORK DESCRIPTION VERY CAREFULLY BEFORE YOU START CODING
+PLEASE READ THE COMMENTS BELOW AND THE HOMEWORK DESCRIPTION VERY CAREFULLY BEFORE YOU START CODING.
 
 The file where you will need to create the GUI which should include:
 (i) Drawing the grid
@@ -17,7 +17,6 @@ and does not let you win the game.
 Here is a video tutorial for using pygame to create grids: http://youtu.be/mdTeqiWyFnc
 
 PLEASE CAREFULLY SEE THE PORTIONS OF THE CODE/FUNCTIONS WHERE IT INDICATES "YOUR CODE BELOW" TO COMPLETE THE SECTIONS.
-
 """
 
 import pygame
@@ -58,17 +57,43 @@ class RandomBoardTicTacToe:
         self.game_reset()
 
     def draw_game(self):
-        """ Draws the game grid and initializes the display. """
+        
         pygame.init()
         self.screen = pygame.display.set_mode(self.size)
         pygame.display.set_caption("Tic Tac Toe Random Grid")
-        self.screen.fill(self.BLACK)
+        self.screen.fill(self.BLACK)  
 
-        """
-        YOUR CODE HERE TO DRAW THE GRID AND OTHER CONTROLS AS PART OF THE GUI.
-        """
+        # Create the grid lines for the Tic Tac Toe board
+        cell_size = self.size[0] // len(self.board)  
+        line_thickness = max(2, cell_size // 30)  
 
-        pygame.display.update()
+        for i in range(1, len(self.board)):
+            # The vertical lines for the board will be created here
+            pygame.draw.line(
+                self.screen, self.WHITE, (i * cell_size, 0), 
+                (i * cell_size, self.size[1]), line_thickness
+            )
+            # The horizontal lines for the board will be created here
+            pygame.draw.line(
+                self.screen, self.WHITE, (0, i * cell_size), 
+                (self.size[0], i * cell_size), line_thickness
+            )
+
+        # Display and draw out the board moves using "X" and "O"
+        font = pygame.font.Font(None, int(cell_size * 0.7))  
+
+        # Loop created to identify player moves throughout the self.board
+        for row in range(len(self.board)):
+            for col in range(len(self.board[row])):
+                move = self.board[row][col]
+                if move == "X" or move == "O":
+                    text = font.render(move, True, self.WHITE)  
+                    # Centers the positioning horizontally and vertically
+                    text_rect = text.get_rect(center=((col * cell_size) + cell_size // 2,
+                                                      (row * cell_size) + cell_size // 2))
+                    self.screen.blit(text, text_rect)  
+
+        pygame.display.update()  
 
     def change_turn(self):
         """ Changes the turn and updates the display title accordingly. """
@@ -78,16 +103,12 @@ class RandomBoardTicTacToe:
             pygame.display.set_caption("Tic Tac Toe - X's turn")
 
     def draw_circle(self, x, y):
-        """ 
-        YOUR CODE HERE TO DRAW THE CIRCLE FOR THE NOUGHTS PLAYER.
-        """
-        pass  # Implement the drawing logic here.
+        """ YOUR CODE HERE TO DRAW THE CIRCLE FOR THE NOUGHTS PLAYER. """
+        pass  
 
     def draw_cross(self, x, y):
-        """ 
-        YOUR CODE HERE TO DRAW THE CROSS FOR THE CROSS PLAYER AT THE CELL SELECTED VIA THE GUI.
-        """
-        pass  # Implement the drawing logic here.
+        """ YOUR CODE HERE TO DRAW THE CROSS FOR THE CROSS PLAYER AT THE CELL SELECTED VIA THE GUI. """
+        pass  
 
     def is_game_over(self):
         """
@@ -103,13 +124,12 @@ class RandomBoardTicTacToe:
         self.game_state = self.game_state.get_new_state(move)
 
     def play_ai(self):
-
         if mode == "minimax":
             _, best_move = minimax(self.game_state, depth=3, maximizingPlayer=True, alpha=float('-inf'), beta=float('inf'))
         elif mode == "negamax":
             _, best_move = negamax(self.game_state, depth=3, turn_multiplier=1, alpha=float('-inf'), beta=float('inf'))
         else:
-            return  # No valid mode selected
+            return  
 
         if best_move:
             self.move(best_move)
@@ -128,9 +148,7 @@ class RandomBoardTicTacToe:
         pygame.display.update()
 
     def game_reset(self):
-        """
-        Resets the board to value 0 for all cells and creates a new game state.
-        """
+        """ Resets the board to value 0 for all cells and creates a new game state. """
         self.draw_game()
 
         """
@@ -161,19 +179,6 @@ class RandomBoardTicTacToe:
                 IF CLICKED ON A NON-EMPTY CELL, THEN GET THE X,Y POSITION, SET ITS VALUE TO 1 (SELECTED BY HUMAN PLAYER),
                 DRAW CROSS (OR NOUGHT DEPENDING ON SYMBOL SELECTED FROM THE GUI), AND CALL play_ai() FUNCTION.
                 """
-
-                # Example structure:
-                # if event.type == pygame.MOUSEBUTTONUP:
-                #     # Get the position of the click
-                #     x, y = pygame.mouse.get_pos()
-                #     # Convert screen coordinates to grid coordinates
-                #     grid_x = x // (self.WIDTH + self.MARGIN)
-                #     grid_y = y // (self.HEIGHT + self.MARGIN)
-                #     # Process the move if it's valid
-                #     if self.game_state.board_state[grid_x][grid_y] == 0:
-                #         self.move((grid_x, grid_y))
-                #         self.draw_cross(grid_x, grid_y)
-                #         self.play_ai()
 
             pygame.display.update()
 
