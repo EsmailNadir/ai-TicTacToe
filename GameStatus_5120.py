@@ -14,25 +14,74 @@ class GameStatus:
 
 
 	def is_terminal(self):
-		"""
-        YOUR CODE HERE TO CHECK IF ANY CELL IS EMPTY WITH THE VALUE 0. IF THERE IS NO EMPTY
-        THEN YOU SHOULD ALSO RETURN THE WINNER OF THE GAME BY CHECKING THE SCORES FOR EACH PLAYER 
-        """
-		
+		rows = len(self.board_state)
+		cols = len(self.board_state[0])
+		count = 0
+		for row in range(rows):
+			for col in range(cols):
+				if self.board_state[row][col] == 0:
+					count += 1
+		if count >= 1:
+			return False
+		# if we have no empty spaces we check who won now with updated score
+		self.oldScores = self.get_scores(terminal=True)
+		if count == 0:
+			if self.oldScores > 0:
+				self.winner = "Human wins"
+			elif self.oldScores == 0:
+				self.winner = "draw"
+			else:
+				self.winner = "AI wins"
+		return self.winner
 
 	def get_scores(self, terminal):
-		"""
-        YOUR CODE HERE TO CALCULATE THE SCORES. MAKE SURE YOU ADD THE SCORE FOR EACH PLAYER BY CHECKING 
-        EACH TRIPLET IN THE BOARD IN EACH DIRECTION (HORIZONAL, VERTICAL, AND ANY DIAGONAL DIRECTION)
-        
-        YOU SHOULD THEN RETURN THE CALCULATED SCORE WHICH CAN BE POSITIVE (HUMAN PLAYER WINS),
-        NEGATIVE (AI PLAYER WINS), OR 0 (DRAW)
-        
-        """        
 		rows = len(self.board_state)
 		cols = len(self.board_state[0])
 		scores = 0
+		Hscore = 0
+		AIscore = 0
 		check_point = 3 if terminal else 2
+
+
+		# handles bounds so it doesn't throw outbounds errors
+		def in_bounds(rows, cols):
+			if rows < 0 or rows >= len(self.board_state) or cols < 0 or cols >= len(self.board_state[0]):
+				return False
+			else:
+				return True
+		
+		# checking the board for wins
+		for row in range(rows):
+			for col in range(cols):
+				if in_bounds(rows,cols+2):
+					# checks rows
+					if self.board_state[row][col] == 'x' and self.board_state[row][col+1] == 'x' and self.board_state[row][col+2] == 'x':
+						Hscore += 1
+					elif self.board_state[row][col] == 'o' and self.board_state[row][col+1] == 'o' and self.board_state[row][col+2] == 'o':
+						AIscore += 1
+				if in_bounds(rows+2,cols):
+					# check columns
+					if self.board_state[row][col] == 'x' and self.board_state[row+1][col] == 'x' and self.board_state[row+2][col] == 'x':
+						Hscore += 1
+					elif self.board_state[row][col] == 'o' and self.board_state[row+1][col] == 'o' and self.board_state[row+2][col] == 'o':
+						AIscore += 1
+				# check diagonals
+				# left diag
+				if in_bounds(rows+2,cols+2):
+					if self.board_state[row][col] == 'x' and self.board_state[row+1][col+1] == 'x' and self.board_state[row+2][col+2] == 'x':
+						Hscore += 1
+					elif self.board_state[row][col] == 'o' and self.board_state[row+1][col+1] == 'o' and self.board_state[row+2][col+2] == 'o':
+						AIscore += 1
+				# right diag
+				if in_bounds(rows+2,cols-2):
+					if self.board_state[row][col] == 'x' and self.board_state[row+1][col-1] == 'x' and self.board_state[row+2][col-2] == 'x':
+						Hscore += 1
+					elif self.board_state[row][col] == 'o' and self.board_state[row+1][col-1] == 'o' and self.board_state[row+2][col-2] == 'o':
+						AIscore += 1
+		# gets score and put it in the global variable of scores so it can be used by other functions
+		scores = Hscore - AIscore
+		self.oldScores = scores
+		return self.oldScores
 		
 	    
 
