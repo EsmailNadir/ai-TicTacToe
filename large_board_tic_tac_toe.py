@@ -98,16 +98,37 @@ class RandomBoardTicTacToe:
             pygame.display.set_caption("Tic Tac Toe - X's turn")
 
     def draw_circle(self, x, y):
-        """ Draws a circle (O) at the given grid position. """
-        pass
+
+        # this creates a circle with outline
+        radius = 50
+        pygame.draw.circle(self.screen,self.CIRCLE_COLOR,(x,y),radius,5)
+        pygame.draw.circle(self.screen,"blue",(x,y),radius-10,5)
+        
 
     def draw_cross(self, x, y):
-        """ Draws a cross (X) at the given grid position. """
-        pass
+        # left side
+        pygame.draw.rect(self.screen, "red", (x-20, y+20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x-10, y+10,15,10))
+        pygame.draw.rect(self.screen, "red", (x-20, y-20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x-10, y-10,15,10))
+        # mid
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x, y,15,15))
+        #right side
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x+10, y-10,15,10))
+        pygame.draw.rect(self.screen, "red", (x+20, y-20,15,10))
+        pygame.draw.rect(self.screen, self.CROSS_COLOR, (x+10, y+10,15,10))
+        pygame.draw.rect(self.screen, "red", (x+20, y+20,15,10))
+        
 
     def is_game_over(self):
-        """ Checks if the game has reached a terminal state. """
-        return self.game_state.is_terminal()
+        # call this function after each move to check if the game is over
+        if self.game_state.is_terminal() == False:
+            return False
+        else:
+            return True
+        
+    
+
 
     def move(self, move):
         """ Updates the game state with the player's move. """
